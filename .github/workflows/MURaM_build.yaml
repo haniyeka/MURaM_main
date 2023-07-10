@@ -39,8 +39,11 @@ jobs:
         cd casper
         chmod +x casper_install_fftw_heffte.sh
         ./casper_install_fftw_heffte.sh
-
-    
+        echo "check installation:"
+    - name: build muram 
+      run: |
+        make clean
+        make
         #echo $LD_LIBRARY_PATH
         #cd Makefile/MPIStencil/MPI/OpenACC/
         #pwd
