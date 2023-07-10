@@ -10,20 +10,21 @@ on:
     branches:
       - main
   workflow_dispatch:
-
+ 
+    
 jobs:
   Build_Makefile:
     runs-on: [self-hosted, Linux, X64, casper]
       #container:
       #image: haniyeka/cuda_mpi_container:6.0
-    env: 
-      MURaM_HOME_DIR: ./
-      FFTW3_HOME: ./casper/fftw
-      HEFFTE_HOME: ./casper/heffte
+    env:
+      MURaM_HOME_DIR: /glade/u/home/hkashgar/MURaM_main
+      FFTW3_HOME: /glade/u/home/hkashgar/MURaM_main/lib/fftw3
+      HEFFTE_HOME: /glade/u/home/hkashgar/MURaM_main/lib/heffte
       CUDA_HOME: /glade/u/apps/dav/opt/cuda/11.4.0
+      
     steps:
     - uses: actions/checkout@v3
-
     - name: loading modules 
       run: |
         echo "loading nvhpc/22.2, openmpi/4.1.1, cuda/11.4.0 modules on casper"
@@ -32,26 +33,27 @@ jobs:
         module load openmpi/4.1.1
         module load cuda/11.4.0
         make clean 
-
+        pwd
+        
     - name: installing fftw and heffte 
       run: |
         echo "installing fftw and heffte"
         cd casper
         chmod +x casper_install_fftw_heffte.sh
         ./casper_install_fftw_heffte.sh
-        echo "check installation:"
+        echo "move them to suitable location:"
+        mv ./fftw/* ../lib/fftw3/
+        mv ./heffte/* ../lib/heffte/
+        rmdir ./fftw ./heffte
+        pwd
+        
     - name: build muram 
       run: |
+        cp casper/Make_defs_casper ./Make_defs
         make clean
         make
-        #echo $LD_LIBRARY_PATH
-        #cd Makefile/MPIStencil/MPI/OpenACC/
-        #pwd
-        #make
-        #echo "Test run:"
-        #./MPIStencil
-  
-#  Build_Autoconfig:
+        
+#  Build_Autoconfig
 #    runs-on: [self-hosted, Linux, X64, casper]
 #    steps:
 #    - uses: actions/checkout@v3
