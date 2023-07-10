@@ -18,9 +18,9 @@ jobs:
       #container:
       #image: haniyeka/cuda_mpi_container:6.0
     env:
-      MURaM_HOME_DIR: /glade/u/home/hkashgar/MURaM_main
-      FFTW3_HOME: /glade/u/home/hkashgar/MURaM_main/lib/fftw3
-      HEFFTE_HOME: /glade/u/home/hkashgar/MURaM_main/lib/heffte
+      MURaM_HOME_DIR: /glade/work/hkashgar/muram_runners/actions-runner/_work/MURaM_main/MURaM_main
+      FFTW3_HOME: /glade/work/hkashgar/muram_runners/actions-runner/_work/MURaM_main/MURaM_main/lib/fftw3
+      HEFFTE_HOME: /glade/work/hkashgar/muram_runners/actions-runner/_work/MURaM_main/MURaM_main/lib/heffte
       CUDA_HOME: /glade/u/apps/dav/opt/cuda/11.4.0
       
     steps:
@@ -45,6 +45,8 @@ jobs:
         mv ./fftw/* ../lib/fftw3/
         mv ./heffte/* ../lib/heffte/
         rmdir ./fftw ./heffte
+        ls ../lib/fftw3
+        ls ../lib/heffte
         pwd
         
     - name: correct the paths in Make_defs and build muram 
@@ -64,6 +66,7 @@ jobs:
           fi
         done < Make_defs > temp_file && mv temp_file Make_defs
         head -n 10 Make_defs
+        ls $MURaM_HOME_DIR
         make clean
         make
         
