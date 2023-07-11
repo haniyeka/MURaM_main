@@ -88,7 +88,9 @@ jobs:
         
         echo "see the loaded modules: "
         module list 
-        
+        module load nvhpc/22.2
+        module load openmpi/4.1.1
+        module load cuda/11.4.0
         make
         
 #  Build_Autoconfig
