@@ -32,6 +32,7 @@ jobs:
         module load nvhpc/22.2
         module load openmpi/4.1.1
         module load cuda/11.4.0
+        echo "clean build ..."
         make clean 
         pwd
         
@@ -44,14 +45,23 @@ jobs:
         echo "move them to suitable location:"
         mv ./fftw/* ../lib/fftw3/
         mv ./heffte/* ../lib/heffte/
+        echo "remove the directories..." 
         rmdir ./fftw ./heffte
+        echo "see what exist in ../lib/fftw3"
         ls ../lib/fftw3
+        
+        echo "see what exist in ../lib/heffte"
         ls ../lib/heffte
         pwd
         
     - name: correct the paths in Make_defs and build muram 
       run: |
+        echo "replace the suitable make_def for casper..." 
         cp casper/Make_defs_casper ./Make_defs
+        echo "see the paths inside: "
+        head -n 10 Make_defs
+        
+        echo "correct the path ..."
         while read -r line; do
           if [[ $line == MURaM_HOME_DIR* ]]; then
             echo "MURaM_HOME_DIR = $MURaM_HOME_DIR"
@@ -65,16 +75,20 @@ jobs:
             echo "$line"
           fi
         done < Make_defs > temp_file && mv temp_file Make_defs
+        
+        echo "corrected path: "
         head -n 10 Make_defs
+        
+        echo "ls the MURaM_HOME_DIR:"
         ls $MURaM_HOME_DIR
+        echo "ls the FFTW3_HOME:"
         ls $FFTW3_HOME
+        echo "ls the HEFFTE_HOME:"
         ls $HEFFTE_HOME
         
-        module purge
-        module load nvhpc/22.2
-        module load openmpi/4.1.1
-        module load cuda/11.4.0
-        make clean
+        echo "see the loaded modules: "
+        module list 
+        
         make
         
 #  Build_Autoconfig
