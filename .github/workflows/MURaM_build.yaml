@@ -63,13 +63,15 @@ jobs:
         echo "correct the path ..."
         while read -r line; do
           if [[ $line == MURaM_HOME_DIR* ]]; then
-            echo "MURaM_HOME_DIR = $MURaM_HOME_DIR"
+            echo -e "MURaM_HOME_DIR = $MURaM_HOME_DIR"
           elif [[ $line == FFTW3_HOME* ]]; then
-            echo "FFTW3_HOME = $FFTW3_HOME"
+            echo -e "FFTW3_HOME = $FFTW3_HOME"
           elif [[ $line == HEFFTE_HOME* ]]; then
-            echo "HEFFTE_HOME = $HEFFTE_HOME"
+            echo -e "HEFFTE_HOME = $HEFFTE_HOME"
           elif [[ $line == CUDA_HOME* ]]; then
-            echo "CUDA_HOME = $CUDA_HOME"
+            echo -e "CUDA_HOME = $CUDA_HOME"
+          else
+            echo -e "$line"
           fi
         done < Make_defs > temp_file && mv temp_file Make_defs
         
