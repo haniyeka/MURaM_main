@@ -69,8 +69,13 @@ jobs:
         ls $MURaM_HOME_DIR
         ls $FFTW3_HOME
         ls $HEFFTE_HOME
-        #make clean
-        #make
+        
+        module purge
+        module load nvhpc/22.2
+        module load openmpi/4.1.1
+        module load cuda/11.4.0
+        make clean
+        make
         
 #  Build_Autoconfig
 #    runs-on: [self-hosted, Linux, X64, casper]
