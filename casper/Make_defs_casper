@@ -126,7 +126,7 @@ AR          = ar
 RANLIB    = ranlib
 
 ######### Suffix rules ########################################
-.SUFFIXES :    .o .cc .c .C .cpp .c++
+.SUFFIXES : .o .cc .c .C .cpp .c++
 
 .c.o:
 	$(CC) $(CFLAGS) -c $<
