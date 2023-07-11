@@ -70,8 +70,6 @@ jobs:
             echo "HEFFTE_HOME = $HEFFTE_HOME"
           elif [[ $line == CUDA_HOME* ]]; then
             echo "CUDA_HOME = $CUDA_HOME"
-          else
-            echo "$line"
           fi
         done < Make_defs > temp_file && mv temp_file Make_defs
         
