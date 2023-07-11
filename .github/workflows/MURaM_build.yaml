@@ -22,7 +22,6 @@ jobs:
       FFTW3_HOME: /glade/work/hkashgar/muram_runners/actions-runner/_work/MURaM_main/MURaM_main/lib/fftw3
       HEFFTE_HOME: /glade/work/hkashgar/muram_runners/actions-runner/_work/MURaM_main/MURaM_main/lib/heffte
       CUDA_HOME: /glade/u/apps/dav/opt/cuda/11.4.0
-      
     steps:
     - uses: actions/checkout@v3
     - name: loading modules 
