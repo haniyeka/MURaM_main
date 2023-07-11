@@ -39,19 +39,19 @@ jobs:
       run: |
         echo "installing fftw and heffte"
         cd casper
-        #chmod +x casper_install_fftw_heffte.sh
-        #./casper_install_fftw_heffte.sh
-        #echo "move them to suitable location:"
-        #mv ./fftw/* ../lib/fftw3/
-        #mv ./heffte/* ../lib/heffte/
-        #echo "remove the directories..." 
-        #rmdir ./fftw ./heffte
-        #echo "see what exist in ../lib/fftw3"
-        #ls ../lib/fftw3
+        chmod +x casper_install_fftw_heffte.sh
+        ./casper_install_fftw_heffte.sh
+        echo "move them to suitable location:"
+        mv ./fftw/* ../lib/fftw3/
+        mv ./heffte/* ../lib/heffte/
+        echo "remove the directories..." 
+        rmdir ./fftw ./heffte
+        echo "see what exist in ../lib/fftw3"
+        ls ../lib/fftw3
         
-        #echo "see what exist in ../lib/heffte"
-        #ls ../lib/heffte
-        #pwd
+        echo "see what exist in ../lib/heffte"
+        ls ../lib/heffte
+        pwd
         
     - name: correct the paths in Make_defs and build muram 
       run: |
@@ -78,12 +78,12 @@ jobs:
         echo "corrected path: "
         cat Make_defs
         
-        #echo "ls the MURaM_HOME_DIR:"
-        #ls $MURaM_HOME_DIR
-        #echo "ls the FFTW3_HOME:"
-        #ls $FFTW3_HOME
-        #echo "ls the HEFFTE_HOME:"
-        #ls $HEFFTE_HOME
+        echo "ls the MURaM_HOME_DIR:"
+        ls $MURaM_HOME_DIR
+        echo "ls the FFTW3_HOME:"
+        ls $FFTW3_HOME
+        echo "ls the HEFFTE_HOME:"
+        ls $HEFFTE_HOME
         
         echo "see the loaded modules: "
         module load nvhpc/22.2
@@ -91,7 +91,8 @@ jobs:
         module load cuda/11.4.0
         echo "see the loaded modules: "
         module list 
-        #make
+        make clean
+        make
         
 #  Build_Autoconfig
 #    runs-on: [self-hosted, Linux, X64, casper]
