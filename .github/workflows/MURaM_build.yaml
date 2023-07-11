@@ -75,17 +75,6 @@ jobs:
           fi
         done < Make_defs > temp_file && mv temp_file Make_defs
         
-        echo "corrected path: "
-        cat Make_defs
-        
-        echo "ls the MURaM_HOME_DIR:"
-        ls $MURaM_HOME_DIR
-        echo "ls the FFTW3_HOME:"
-        ls $FFTW3_HOME
-        echo "ls the HEFFTE_HOME:"
-        ls $HEFFTE_HOME
-        
-        echo "see the loaded modules: "
         module load nvhpc/22.2
         module load openmpi/4.1.1
         module load cuda/11.4.0
@@ -94,31 +83,7 @@ jobs:
         make clean
         make
         
-#  Build_Autoconfig
-#    runs-on: [self-hosted, Linux, X64, casper]
-#    steps:
-#    - uses: actions/checkout@v3
-#    - name: Navigate to directory and build with autoconfig
-#      run: |
-#        cd Autoconfig/MPIStencil/MPI/OpenACC/
-#        pwd
-#        autoconf
-#       ./configure
-#        make
-#        echo "Test run:"
-#        ./MPIStencil
-
-#  Build_CMake:
-#    runs-on: [self-hosted, Linux, X64, casper]
-#    steps:
-#    - uses: actions/checkout@v3
-#    - name: Navigate to directory and build with cmake
-#      run: |
-#        cd CMake/MPIStencil/MPI/OpenACC/
-#        pwd
-#        mkdir build
-#        cd build
-#        cmake ..
-#        make
-#        echo "Test run:"
-#        ./MPIStencil
+    - name: Check build
+      run: |
+        ls ./src/mhd3d.x
+        
