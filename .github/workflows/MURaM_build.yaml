@@ -61,7 +61,7 @@ jobs:
         head -n 10 Make_defs
         
         echo "correct the path ..."
-        while read -r line; do
+        while IFS= read -r line; do
           if [[ $line == MURaM_HOME_DIR* ]]; then
             echo -e "MURaM_HOME_DIR = $MURaM_HOME_DIR"
           elif [[ $line == FFTW3_HOME* ]]; then
