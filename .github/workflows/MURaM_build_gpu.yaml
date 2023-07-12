@@ -1,4 +1,4 @@
-name: MURaM_Build
+name: MURaM_Build_gpu
 
 on:
   schedule:
@@ -23,7 +23,7 @@ jobs:
       HEFFTE_HOME: /glade/u/home/hkashgar/muram_lib/heffte
       #FFTW3_HOME: /glade/work/hkashgar/muram_runners/actions-runner/_work/MURaM_main/MURaM_main/lib/fftw3
       #HEFFTE_HOME: /glade/work/hkashgar/muram_runners/actions-runner/_work/MURaM_main/MURaM_main/lib/heffte
-      #CUDA_HOME: /glade/u/apps/dav/opt/cuda/11.4.0
+      CUDA_HOME: /glade/u/apps/dav/opt/cuda/11.4.0
     steps:
     - name: Ensure we are not in login mode
       run: |
@@ -101,8 +101,8 @@ jobs:
             echo -e "FFTW3_HOME = $FFTW3_HOME"
           elif [[ $line == HEFFTE_HOME* ]]; then
             echo -e "HEFFTE_HOME = $HEFFTE_HOME"
-          #elif [[ $line == CUDA_HOME* ]]; then
-          #  echo -e "CUDA_HOME = $CUDA_HOME"
+          elif [[ $line == CUDA_HOME* ]]; then
+            echo -e "CUDA_HOME = $CUDA_HOME"
           else
             echo -e "$line"
           fi
@@ -110,7 +110,6 @@ jobs:
         
         echo "see new paths inside: "
         head -n 10 Make_defs
-        
     - name: Build Muram
       run: |
         echo "loading nvhpc, openmpi, cuda modules on casper"
@@ -123,7 +122,7 @@ jobs:
         module list 
         make clean
         make
-
+        
     - name: Check build
       run: |
         ls ./src/mhd3d.x
