@@ -1,6 +1,8 @@
 name: MURaM_Build
 
 on:
+  schedule:
+    - cron: '0 0 * * MON' 
   push:
     branches:
       - main
@@ -15,8 +17,6 @@ on:
 jobs:
   Build:
     runs-on: [self-hosted, Linux, X64, casper]
-      #container:
-      #image: haniyeka/cuda_mpi_container:6.0
     env:
       MURaM_HOME_DIR: /glade/work/hkashgar/muram_runners/actions-runner/_work/MURaM_main/MURaM_main
       FFTW3_HOME: /glade/work/hkashgar/muram_runners/actions-runner/_work/MURaM_main/MURaM_main/lib/fftw3
@@ -26,33 +26,66 @@ jobs:
     - uses: actions/checkout@v3
     - name: loading modules 
       run: |
-        echo "loading nvhpc/22.2, openmpi/4.1.1, cuda/11.4.0 modules on casper"
+        echo "loading nvhpc, openmpi, cuda modules on casper"
         module purge
-        module load nvhpc/22.2
-        module load openmpi/4.1.1
-        module load cuda/11.4.0
-        echo "clean build ..."
-        make clean 
+        module load nvhpc
+        module load openmpi
+        module load cuda
         pwd
+        echo "Loaded modules: "
+        module list
         
-    - name: installing fftw and heffte 
+    - name: Ensure FFTW and HEFFTE Installation
       run: |
-        echo "installing fftw and heffte"
-        cd casper
-        chmod +x casper_install_fftw_heffte.sh
-        ./casper_install_fftw_heffte.sh
-        echo "move them to suitable location:"
-        mv ./fftw/* ../lib/fftw3/
-        mv ./heffte/* ../lib/heffte/
-        echo "remove the directories..." 
-        rmdir ./fftw ./heffte
-        echo "see what exist in ../lib/fftw3"
-        ls ../lib/fftw3
+        ################## Check and Install FFTW3-mpi and Heffte ##################
         
-        echo "see what exist in ../lib/heffte"
-        ls ../lib/heffte
-        pwd
+        echo "Checking FFTW..."
+        module_name_fftw="fftw3-mpi"
+        module_load_status_fftw=$(module load $module_name_fftw 2>&1)
+        module_name_heffte="heffte"
+        module_load_status_heffte=$(module load $module_name_heffte 2>&1)
+
+        notfound_errorMsg="Lmod has detected the following error: The following module(s) are unknown:"
+        loading_errorMsg="Lmod has detected the following error: These module(s) or extension(s) exist but cannot be loaded as requested:"
         
+        if [[ $module_load_status_fftw == "$notfound_errorMsg"* || $module_load_status_heffte == "$notfound_errorMsg"* ]]; then
+          echo $module_load_status_fftw
+          echo $module_load_status_heffte
+          
+          echo "Module is not available, we're going to install it"
+          
+          #Install module here
+          The casper_install_fftw_heffte script install both fftw3 and heffte
+          cd casper && chmod +x casper_install_fftw_heffte.sh && ./casper_install_fftw_heffte.sh
+          echo "Move them to suitable location:"
+          #mv ./fftw/* ../lib/fftw3/ && mv ./heffte/* ../lib/heffte/
+          #rmdir ./fftw ./heffte
+          
+          echo "See what exist in ../lib/fftw3"
+          ls ../lib/fftw3
+
+          echo "See what exist in ../lib/heffte"
+          ls ../lib/heffte
+          pwd
+       
+        ################## Should correct this part, since fftw3-mpi load needs some dependecies that doesn't match heffte dependencies ##################
+        #elif [[ $module_load_status == "$loading_errorMsg"* ]]; then
+        
+        #  echo $module_load_status
+        #  echo "Changing loading method..."
+        #  module_info=$(module spider $module_name 2>&1)
+        #  version=$(echo "$module_info" | grep -oP 'fftw3-mpi/\K[^ ]*' | head -n 1)
+        #  module_load_status=$(module load "$module_name/$version" 2>&1)
+        #  if [[ $module_load_status == "$loading_errorMsg"* ]]; then
+        #    dependencies=$(module spider $module_name/$version 2>&1 | awk '/You will need to load all module/,0' | tail -n +2 | head -n -2)
+
+        else
+          echo "Module $module_name is available"
+            # If module is needed in the script, load it
+            module load $module_name
+        fi
+        
+            
     - name: correct the paths in Make_defs and build muram 
       run: |
         echo "replace the suitable make_def for casper..." 
