@@ -88,7 +88,7 @@ jobs:
         # fi
         
             
-    - name: correct the paths in Make_defs and build muram 
+    - name: Updating the Path References in Make_defs File
       run: |
         echo "replace the suitable make_def for casper..." 
         cp casper/Make_defs_casper ./Make_defs
@@ -109,14 +109,16 @@ jobs:
             echo -e "$line"
           fi
         done < Make_defs > temp_file && mv temp_file Make_defs
-        
-        module load nvhpc/22.2
-        module load openmpi/4.1.1
-        module load cuda/11.4.0
+    - name: Build Muram
+      run: |
         echo "see the loaded modules: "
         module list 
         make clean
         make
+         #        module load nvhpc/22.2
+         #        module load openmpi/4.1.1
+         #        module load cuda/11.4.0
+
         
     - name: Check build
       run: |
