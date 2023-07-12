@@ -23,7 +23,7 @@ jobs:
       HEFFTE_HOME: /glade/u/home/hkashgar/muram_lib/heffte
       #FFTW3_HOME: /glade/work/hkashgar/muram_runners/actions-runner/_work/MURaM_main/MURaM_main/lib/fftw3
       #HEFFTE_HOME: /glade/work/hkashgar/muram_runners/actions-runner/_work/MURaM_main/MURaM_main/lib/heffte
-      CUDA_HOME: /glade/u/apps/dav/opt/cuda/11.4.0
+      #CUDA_HOME: /glade/u/apps/dav/opt/cuda/11.4.0
     steps:
     - uses: actions/checkout@v3
     - name: loading modules 
@@ -111,13 +111,13 @@ jobs:
         done < Make_defs > temp_file && mv temp_file Make_defs
     - name: Build Muram
       run: |
+        module load nvhpc
+        module load openmpi
+        module load cuda
         echo "see the loaded modules: "
         module list 
         make clean
         make
-         #        module load nvhpc/22.2
-         #        module load openmpi/4.1.1
-         #        module load cuda/11.4.0
 
         
     - name: Check build
