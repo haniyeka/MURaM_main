@@ -101,8 +101,8 @@ jobs:
             echo -e "FFTW3_HOME = $FFTW3_HOME"
           elif [[ $line == HEFFTE_HOME* ]]; then
             echo -e "HEFFTE_HOME = $HEFFTE_HOME"
-          elif [[ $line == CUDA_HOME* ]]; then
-            echo -e "CUDA_HOME = $CUDA_HOME"
+          #elif [[ $line == CUDA_HOME* ]]; then
+          #  echo -e "CUDA_HOME = $CUDA_HOME"
           else
             echo -e "$line"
           fi
