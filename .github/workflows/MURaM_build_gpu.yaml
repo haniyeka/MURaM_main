@@ -109,7 +109,8 @@ jobs:
         done < Make_defs > temp_file && mv temp_file Make_defs
         
         echo "see new paths inside: "
-        head -n 10 Make_defs
+        #head -n 10 Make_defs
+        cat Make_defs
     - name: Build Muram
       run: |
         echo "loading nvhpc, openmpi, cuda modules on casper"
