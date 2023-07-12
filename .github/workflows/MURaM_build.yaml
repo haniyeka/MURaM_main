@@ -26,17 +26,6 @@ jobs:
       #CUDA_HOME: /glade/u/apps/dav/opt/cuda/11.4.0
     steps:
     - uses: actions/checkout@v3
-    - name: loading modules 
-      run: |
-        echo "loading nvhpc, openmpi, cuda modules on casper"
-        module purge
-        module load nvhpc
-        module load openmpi
-        module load cuda
-        pwd
-        echo "Loaded modules: "
-        module list
-        
     - name: Ensure FFTW and HEFFTE Installation
       run: |
         ################## Check and Install FFTW3-mpi and Heffte ##################
@@ -111,15 +100,17 @@ jobs:
         done < Make_defs > temp_file && mv temp_file Make_defs
     - name: Build Muram
       run: |
+        echo "loading nvhpc, openmpi, cuda modules on casper"
+        module purge
         module load nvhpc
         module load openmpi
         module load cuda
+        
         echo "see the loaded modules: "
         module list 
         make clean
         make
 
-        
     - name: Check build
       run: |
         ls ./src/mhd3d.x
