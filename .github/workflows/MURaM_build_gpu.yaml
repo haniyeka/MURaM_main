@@ -112,6 +112,8 @@ jobs:
       run: |
         echo "loading nvhpc, openmpi, cuda modules on casper"
         module purge
+        module load ncarenv
+        module load ncarcompilers
         module load nvhpc
         module load openmpi
         module load cuda
