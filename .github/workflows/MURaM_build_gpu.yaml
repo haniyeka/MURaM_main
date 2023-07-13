@@ -18,9 +18,9 @@ jobs:
   Build:
     runs-on: [self-hosted, Linux, X64, casper]
     env:
-      MURaM_HOME_DIR: /glade/work/$USER/muram_runners/$RUNNER_NAME/_work/MURaM_main/MURaM_main
-      FFTW3_HOME: /glade/u/home/$USER/muram_lib/fftw3
-      HEFFTE_HOME: /glade/u/home/$USER/muram_lib/heffte
+      MURaM_HOME_DIR: /glade/work/${{ USER }}/muram_runners/${{ RUNNER_NAME }}/_work/MURaM_main/MURaM_main
+      FFTW3_HOME: /glade/u/home/${{ USER }}/muram_lib/fftw3
+      HEFFTE_HOME: /glade/u/home/${{ USER }}/muram_lib/heffte
     steps:
     - name: Ensure we are not in login mode
       run: |
