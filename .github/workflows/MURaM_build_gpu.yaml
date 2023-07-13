@@ -25,15 +25,15 @@ jobs:
       #HEFFTE_HOME: /glade/work/hkashgar/muram_runners/actions-runner/_work/MURaM_main/MURaM_main/lib/heffte
       #CUDA_HOME: /glade/u/apps/dav/opt/cuda/11.4.0
     steps:
-    - name: Ensure we are not in login mode
-      run: |
-        if [[ $PBS_ENVIRONMENT != "PBS_INTERACTIVE" && $PBS_ENVIRONMENT != "PBS_BATCH" ]]; then
-          echo "::error::Workflow is running in login mode"
-          exit 1
-        else
-          echo "Workflow is running in $PBS_ENVIRONMENT mode!"
-          echo JobID = $PBS_JOBID
-        fi
+    #- name: Ensure we are not in login mode
+     # run: |
+      #  if [[ $PBS_ENVIRONMENT != "PBS_INTERACTIVE" && $PBS_ENVIRONMENT != "PBS_BATCH" ]]; then
+       #   echo "::error::Workflow is running in login mode"
+        #  exit 1
+        #else
+         # echo "Workflow is running in $PBS_ENVIRONMENT mode!"
+          #echo JobID = $PBS_JOBID
+        #fi
     - uses: actions/checkout@v3
     - name: Ensure FFTW and HEFFTE Installation
       run: |
