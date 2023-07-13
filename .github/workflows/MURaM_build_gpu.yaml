@@ -18,14 +18,13 @@ jobs:
   Build:
     runs-on: [self-hosted, Linux, X64, casper]
     env:
-      #MURaM_HOME_DIR: 
+      MURaM_HOME_DIR: /glade/work/hkashgar/muram_runners/${{ runner.name }}/_work/MURaM_main/MURaM_main
       FFTW3_HOME: /glade/u/home/hkashgar/muram_lib/fftw3
       HEFFTE_HOME: /glade/u/home/hkashgar/muram_lib/heffte
     steps:
     - name: Ensure we are not in login mode
       run: |
-        pwd
-        ls ./
+        echo ${{ runner.name }}
         if [[ $PBS_ENVIRONMENT != "PBS_INTERACTIVE" && $PBS_ENVIRONMENT != "PBS_BATCH" ]]; then
           echo "::error::Workflow is running in login mode"
           exit 1
