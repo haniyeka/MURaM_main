@@ -111,7 +111,7 @@ jobs:
     - name: Build Muram
       run: |
         echo "loading nvhpc, openmpi, cuda modules on casper"
-        module purge
+        #module purge
         module load ncarenv
         module load ncarcompilers
         module load nvhpc
