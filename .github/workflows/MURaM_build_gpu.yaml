@@ -24,6 +24,8 @@ jobs:
     steps:
     - name: Ensure we are not in login mode
       run: |
+        pwd
+        ls ./
         if [[ $PBS_ENVIRONMENT != "PBS_INTERACTIVE" && $PBS_ENVIRONMENT != "PBS_BATCH" ]]; then
           echo "::error::Workflow is running in login mode"
           exit 1
