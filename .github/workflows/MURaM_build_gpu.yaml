@@ -18,7 +18,7 @@ jobs:
   Build:
     runs-on: [self-hosted, Linux, X64, casper]
     env:
-      MURaM_HOME_DIR: /glade/work/hkashgar/muram_runners/actions-runner/_work/MURaM_main/MURaM_main
+      MURaM_HOME_DIR: ./
       FFTW3_HOME: /glade/u/home/hkashgar/muram_lib/fftw3
       HEFFTE_HOME: /glade/u/home/hkashgar/muram_lib/heffte
     steps:
