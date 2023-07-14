@@ -26,11 +26,13 @@ jobs:
     steps:
     - name: Set environmental variables
       run: | 
+        # used the method in: https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#environment-files
         echo "MURaM_HOME_DIR=/glade/work/$USER/muram_runners/$RUNNER_NAME/_work/MURaM_main/MURaM_main" >> $GITHUB_ENV
         echo "FFTW3_HOME=/glade/u/home/$USER/muram_lib/fftw3" >> $GITHUB_ENV
         echo "HEFFTE_HOME=/glade/u/home/$USER/muram_lib/heffte" >> $GITHUB_ENV
     - name: Ensure we are not in login mode
       run: |
+        # on caster or any pbs system, $PBS_ENVIRONMENT will give some informations about the job
         if [[ $PBS_ENVIRONMENT != "PBS_INTERACTIVE" && $PBS_ENVIRONMENT != "PBS_BATCH" ]]; then
           echo "::error::Workflow is running in login mode"
           exit 1
