@@ -17,6 +17,8 @@ on:
 jobs:
   Build:
     runs-on: [self-hosted, Linux, X64, casper]
+    # NOTE: I commented this part because we cannot use env variables when defining env variables. 
+    # see: https://brandur.org/fragments/github-actions-env-vars-in-env-vars and https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#environment-files
     #env:
       #MURaM_HOME_DIR: /glade/work/${{ USER }}/muram_runners/${{ RUNNER_NAME }}/_work/MURaM_main/MURaM_main
       #FFTW3_HOME: /glade/u/home/${{ USER }}/muram_lib/fftw3
@@ -27,9 +29,6 @@ jobs:
         echo "MURaM_HOME_DIR=/glade/work/$USER/muram_runners/$RUNNER_NAME/_work/MURaM_main/MURaM_main" >> $GITHUB_ENV
         echo "FFTW3_HOME=/glade/u/home/$USER/muram_lib/fftw3" >> $GITHUB_ENV
         echo "HEFFTE_HOME=/glade/u/home/$USER/muram_lib/heffte" >> $GITHUB_ENV
-        echo "${{ env.MURaM_HOME_DIR }}"
-        echo "${{ env.FFTW3_HOME }}"
-        echo "${{ env.HEFFTE_HOME }}"
     - name: Ensure we are not in login mode
       run: |
         if [[ $PBS_ENVIRONMENT != "PBS_INTERACTIVE" && $PBS_ENVIRONMENT != "PBS_BATCH" ]]; then
