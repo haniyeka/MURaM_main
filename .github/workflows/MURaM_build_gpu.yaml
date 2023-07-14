@@ -2,6 +2,7 @@ name: MURaM_Build_gpu
 
 on:
   schedule:
+    #runs the workflow every Monday at midnight.
     - cron: '0 0 * * MON' 
   push:
     branches:
@@ -20,9 +21,9 @@ jobs:
     # NOTE: I commented this part because we cannot use env variables when defining env variables. 
     # see: https://brandur.org/fragments/github-actions-env-vars-in-env-vars and https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#environment-files
     #env:
-      #MURaM_HOME_DIR: /glade/work/${{ USER }}/muram_runners/${{ RUNNER_NAME }}/_work/MURaM_main/MURaM_main
-      #FFTW3_HOME: /glade/u/home/${{ USER }}/muram_lib/fftw3
-      #HEFFTE_HOME: /glade/u/home/${{ USER }}/muram_lib/heffte
+      #MURaM_HOME_DIR: /glade/work/$USER/muram_runners/$RUNNER_NAME/_work/MURaM_main/MURaM_main
+      #FFTW3_HOME: /glade/u/home/$USER/muram_lib/fftw3
+      #HEFFTE_HOME: /glade/u/home/$USER/muram_lib/heffte
     steps:
     - name: Set environmental variables
       run: | 
@@ -135,4 +136,8 @@ jobs:
     - name: Check build
       run: |
         ls ./src/mhd3d.x
+        
+    - name: Verify GPU and CPU Results
+      run: | 
+        module load python
         
