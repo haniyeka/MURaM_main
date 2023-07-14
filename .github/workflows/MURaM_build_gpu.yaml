@@ -27,9 +27,9 @@ jobs:
         echo "MURaM_HOME_DIR=/glade/work/$USER/muram_runners/$RUNNER_NAME/_work/MURaM_main/MURaM_main" >> $GITHUB_ENV
         echo "FFTW3_HOME=/glade/u/home/$USER/muram_lib/fftw3" >> $GITHUB_ENV
         echo "HEFFTE_HOME=/glade/u/home/$USER/muram_lib/heffte" >> $GITHUB_ENV
-        echo $MURaM_HOME_DIR
-        echo $FFTW3_HOME
-        echo $HEFFTE_HOME
+        echo "${{ env.MURaM_HOME_DIR }}"
+        echo "${{ env.FFTW3_HOME }}"
+        echo "${{ env.HEFFTE_HOME }}"
     - name: Ensure we are not in login mode
       run: |
         if [[ $PBS_ENVIRONMENT != "PBS_INTERACTIVE" && $PBS_ENVIRONMENT != "PBS_BATCH" ]]; then
