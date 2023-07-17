@@ -139,5 +139,9 @@ jobs:
         
     - name: Verify GPU and CPU Results
       run: | 
-        module load python
+        module load python/3.7.12
+        cp ./src/mhd3d.x ./TEST/Test_3D
+        #change the parameters 
+        #submit the job or run the script
+        
         
