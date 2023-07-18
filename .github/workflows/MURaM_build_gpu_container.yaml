@@ -28,6 +28,7 @@ jobs:
     steps:
     - name: Load Singularity Image
       run: | 
+        echo $IMAGE_PATH
         # The image is obtained from Carl's docker container. 
         # singularity remote login -u $user -p glpat-BSwDmLUnv8KzyQx1hNvA docker://registry.gitlab.com/cponder
         # singularity pull docker://registry.gitlab.com/cponder/containers/ubuntu-pgi-openmpi/selene:latest
