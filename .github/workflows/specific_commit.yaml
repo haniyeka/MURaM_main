@@ -1,0 +1,73 @@
+name: specific_commit
+
+on:
+  schedule:
+    #runs the workflow every Monday at midnight.
+    - cron: '0 0 * * MON' 
+  push:
+    branches:
+      - main
+    paths: 
+      - ./
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+ 
+    
+jobs:
+  Build:
+    runs-on: [self-hosted, Linux, X64, casper]
+    # NOTE: I commented this part because we cannot use env variables when defining env variables. 
+    # see: https://brandur.org/fragments/github-actions-env-vars-in-env-vars and https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#environment-files
+    #env:
+      #MURaM_HOME_DIR: /glade/work/$USER/muram_runners/$RUNNER_NAME/_work/MURaM_main/MURaM_main
+      #FFTW3_HOME: /glade/u/home/$USER/muram_lib/fftw3
+      #HEFFTE_HOME: /glade/u/home/$USER/muram_lib/heffte
+      #IMAGE_PATH: /glade/u/home/$USER/selene_latest.sif
+      
+    steps:
+    - name: Set Image path
+      run: |
+        # NOTE: We cannot set and use the variable in the same step -- it will be empty
+        echo "IMAGE_PATH=/glade/u/home/$USER/selene_latest.sif" >> $GITHUB_ENV
+    - name: Load Singularity Image
+      run: | 
+        echo $IMAGE_PATH
+        # The image is obtained from Carl's docker container. 
+        # singularity remote login -u $user -p glpat-BSwDmLUnv8KzyQx1hNvA docker://registry.gitlab.com/cponder
+        # singularity pull docker://registry.gitlab.com/cponder/containers/ubuntu-pgi-openmpi/selene:latest
+        # the image is large in size and you'll need to allocate about 120GB of memory when pulling the image.  
+        module load singularity
+        singularity shell --nv --bind /glade:/glade $IMAGE_PATH
+    - name: Set environmental variables
+      run: | 
+        # used the method in: https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#environment-files
+        echo "MURaM_HOME_DIR=/glade/work/$USER/muram_runners/$RUNNER_NAME/_work/MURaM_main/MURaM_main" >> $GITHUB_ENV
+        echo "FFTW3_HOME=/glade/u/home/$USER/muram_lib/fftw3" >> $GITHUB_ENV
+        echo "HEFFTE_HOME=/glade/u/home/$USER/muram_lib/heffte" >> $GITHUB_ENV
+    - name: Ensure we are not in login mode
+      run: |
+        # on caster or any pbs system, $PBS_ENVIRONMENT will give some informations about the job
+        if [[ $PBS_ENVIRONMENT != "PBS_INTERACTIVE" && $PBS_ENVIRONMENT != "PBS_BATCH" ]]; then
+          echo "::error::Workflow is running in login mode"
+          exit 1
+        else
+          echo "Workflow is running in $PBS_ENVIRONMENT mode!"
+          echo JobID = $PBS_JOBID
+        fi 
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      with:
+        ref: '28222cff1015d76dba6ead5a871face4a10f7a5b'
+    - name: cat file 
+      run: |
+        cat .github/workflows/MURaM_build.yaml
+  
+      
+      
+      
+      
+      
+      
+      
