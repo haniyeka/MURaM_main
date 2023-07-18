@@ -15,7 +15,7 @@ on:
   workflow_dispatch:
  
 env: 
-      COMMIT_SHA: '28222cff1015d76dba6ead5a871face4a10f7a5b'
+  COMMIT_SHA: 28222cff1015d76dba6ead5a871face4a10f7a5b
       
 jobs:
   Build:
@@ -23,6 +23,8 @@ jobs:
     #env: 
     #  COMMIT_SHA: '28222cff1015d76dba6ead5a871face4a10f7a5b'
     steps:
+    - name: echo
+      run: echo $COMMIT_SHA
     - name: Checkout repository
       uses: actions/checkout@v3
       with:
