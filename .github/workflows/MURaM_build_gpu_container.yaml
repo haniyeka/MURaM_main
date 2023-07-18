@@ -1,4 +1,4 @@
-name: MURaM_Build_gpu
+name: MURaM_Build_gpu_container
 
 on:
   schedule:
