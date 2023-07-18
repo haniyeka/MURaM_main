@@ -20,7 +20,7 @@ jobs:
     runs-on: [self-hosted, Linux, X64, casper]
     # NOTE: I commented this part because we cannot use env variables when defining env variables. 
     # see: https://brandur.org/fragments/github-actions-env-vars-in-env-vars and https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#environment-files
-    #env:
+    env:
       #MURaM_HOME_DIR: /glade/work/$USER/muram_runners/$RUNNER_NAME/_work/MURaM_main/MURaM_main
       #FFTW3_HOME: /glade/u/home/$USER/muram_lib/fftw3
       #HEFFTE_HOME: /glade/u/home/$USER/muram_lib/heffte
