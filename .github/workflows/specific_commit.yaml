@@ -13,22 +13,15 @@ on:
     branches:
       - main
   workflow_dispatch:
- 
-env: 
-  COMMIT_SHA: 28222cff1015d76dba6ead5a871face4a10f7a5b
-      
+  
 jobs:
   Build:
     runs-on: [self-hosted, Linux, X64, casper]
-    #env: 
-    #  COMMIT_SHA: '28222cff1015d76dba6ead5a871face4a10f7a5b'
     steps:
-    - name: echo
-      run: echo $COMMIT_SHA
     - name: Checkout repository
       uses: actions/checkout@v3
       with:
-        ref: $COMMIT_SHA
+        ref: 28222cff1015d76dba6ead5a871face4a10f7a5b
     - name: cat file 
       run: |
         cat .github/workflows/MURaM_build.yaml
