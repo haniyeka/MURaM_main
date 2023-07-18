@@ -19,7 +19,7 @@ jobs:
   Build:
     runs-on: [self-hosted, Linux, X64, casper]
     env: 
-      COMMIT_SHA: 28222cff1015d76dba6ead5a871face4a10f7a5b
+      COMMIT_SHA: '28222cff1015d76dba6ead5a871face4a10f7a5b'
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
