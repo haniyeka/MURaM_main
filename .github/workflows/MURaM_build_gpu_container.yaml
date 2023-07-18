@@ -27,9 +27,12 @@ jobs:
       #IMAGE_PATH: /glade/u/home/$USER/selene_latest.sif
       
     steps:
+    - name: Set Image path
+      run: |
+        # NOTE: We cannot set and use the variable in the same step -- it will be empty
+        echo "IMAGE_PATH=/glade/u/home/$USER/selene_latest.sif" >> $GITHUB_ENV
     - name: Load Singularity Image
       run: | 
-        echo "IMAGE_PATH=/glade/u/home/$USER/selene_latest.sif" >> $GITHUB_ENV
         echo $IMAGE_PATH
         # The image is obtained from Carl's docker container. 
         # singularity remote login -u $user -p glpat-BSwDmLUnv8KzyQx1hNvA docker://registry.gitlab.com/cponder
