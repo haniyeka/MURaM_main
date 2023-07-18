@@ -24,7 +24,7 @@ jobs:
       #MURaM_HOME_DIR: /glade/work/$USER/muram_runners/$RUNNER_NAME/_work/MURaM_main/MURaM_main
       #FFTW3_HOME: /glade/u/home/$USER/muram_lib/fftw3
       #HEFFTE_HOME: /glade/u/home/$USER/muram_lib/heffte
-      IMAGE_PATH: /glade/u/homa/$USER/selene_latest.sif
+      IMAGE_PATH: /glade/u/home/$USER/selene_latest.sif
     steps:
     - name: Load Singularity Image
       run: | 
