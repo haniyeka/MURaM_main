@@ -133,6 +133,7 @@ jobs:
         singularity exec --nv --bind /glade:/glade $IMAGE_PATH /bin/bash -c 'make clean && make'
     - name: Check build
       run: |
+        module load singularity
         singularity exec --nv --bind /glade:/glade $IMAGE_PATH /bin/bash -c 'ls ./src/mhd3d.x'
     - name: Verify GPU and CPU Results
       run: | 
