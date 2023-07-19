@@ -24,7 +24,7 @@ jobs:
       #MURaM_HOME_DIR: /glade/work/$USER/muram_runners/$RUNNER_NAME/_work/MURaM_main/MURaM_main
       #FFTW3_HOME: /glade/u/home/$USER/muram_lib/fftw3
       #HEFFTE_HOME: /glade/u/home/$USER/muram_lib/heffte
-      #IMAGE_PATH: /glade/u/home/$USER/selene_latest.sif
+      #IMAGE_PATH: /glade/work/$USER/carl_fftw_heffte_1.0.sif
       
     steps:
     - name: Set environmental variables
@@ -32,8 +32,9 @@ jobs:
         # used the method in: https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#environment-files
         # NOTE: We cannot set and use the variable in the same step -- it will be empty
         echo "MURaM_HOME_DIR=/glade/work/$USER/muram_runners/$RUNNER_NAME/_work/MURaM_main/MURaM_main" >> $GITHUB_ENV
-        echo "IMAGE_PATH=/glade/u/home/$USER/selene_latest.sif" >> $GITHUB_ENV
+        echo "IMAGE_PATH=/glade/work/$USER/carl_fftw_heffte_1.0.sif" >> $GITHUB_ENV
         # FFTW3_HOME, HEFFTE_HOME, and CUDA_HOME all already set in haniyka/carl_fftw_heffte:1.0 docker image.
+        # To see how I have created this image out of Carl's image visit: https://github.com/NCAR/Siparcs2023_CI_CD/wiki/Docker-Image:-haniyeka-carl_fftw_heffte:1.0
     - name: Ensure we are not in login mode
       run: |
         # on caster or any pbs system, $PBS_ENVIRONMENT will give some informations about the job
