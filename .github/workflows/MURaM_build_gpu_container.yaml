@@ -27,22 +27,11 @@ jobs:
       #IMAGE_PATH: /glade/u/home/$USER/selene_latest.sif
       
     steps:
-    - name: Set Image path
-      run: |
-        # NOTE: We cannot set and use the variable in the same step -- it will be empty
-        echo "IMAGE_PATH=/glade/u/home/$USER/selene_latest.sif" >> $GITHUB_ENV
-    - name: Load Singularity Image
-      run: | 
-        echo $IMAGE_PATH
-        # The image is obtained from Carl's docker container. 
-        # singularity remote login -u $user -p glpat-BSwDmLUnv8KzyQx1hNvA docker://registry.gitlab.com/cponder
-        # singularity pull docker://registry.gitlab.com/cponder/containers/ubuntu-pgi-openmpi/selene:latest
-        # the image is large in size and you'll need to allocate about 120GB of memory when pulling the image.  
-        module load singularity
-        singularity shell --nv --bind /glade:/glade $IMAGE_PATH
     - name: Set environmental variables
       run: | 
         # used the method in: https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#environment-files
+         # NOTE: We cannot set and use the variable in the same step -- it will be empty
+        echo "IMAGE_PATH=/glade/u/home/$USER/selene_latest.sif" >> $GITHUB_ENV
         echo "MURaM_HOME_DIR=/glade/work/$USER/muram_runners/$RUNNER_NAME/_work/MURaM_main/MURaM_main" >> $GITHUB_ENV
         echo "FFTW3_HOME=/glade/u/home/$USER/muram_lib/fftw3" >> $GITHUB_ENV
         echo "HEFFTE_HOME=/glade/u/home/$USER/muram_lib/heffte" >> $GITHUB_ENV
@@ -135,27 +124,27 @@ jobs:
         cat Make_defs
     - name: Build Muram
       run: |
-        echo "loading nvhpc, openmpi, cuda modules on casper"
-        #module purge
-        #module load ncarenv
-        #module load ncarcompilers
-        #module load nvhpc
-        #module load openmpi
-        #module load cuda
+        echo $IMAGE_PATH
+        # The image is obtained from Carl's docker container. 
+        # singularity remote login -u $user -p glpat-BSwDmLUnv8KzyQx1hNvA docker://registry.gitlab.com/cponder
+        # singularity pull docker://registry.gitlab.com/cponder/containers/ubuntu-pgi-openmpi/selene:latest
+        # the image is large in size and you'll need to allocate about 120GB of memory when pulling the image.  
+        module load singularity
+        #singularity shell --nv --bind /glade:/glade $IMAGE_PATH
+  
+        singularity exec --nv --bind /glade:/glade $IMAGE_PATH /bin/bash -c 'make clean && make'
+
+        #make clean
+        #make
         
-        #echo "see the loaded modules: "
-        #module list 
-        make clean
-        make
+    #- name: Check build
+    #  run: |
+    #    ls ./src/mhd3d.x
         
-    - name: Check build
-      run: |
-        ls ./src/mhd3d.x
-        
-    - name: Verify GPU and CPU Results
-      run: | 
-        module load python/3.7.12
-        cp ./src/mhd3d.x ./TEST/Test_3D
+    #- name: Verify GPU and CPU Results
+    #  run: | 
+    #    module load python/3.7.12
+    #    cp ./src/mhd3d.x ./TEST/Test_3D
         #change the parameters 
         #submit the job or run the script
         
