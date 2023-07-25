@@ -1,8 +1,14 @@
+# Author: Haniye Kashgarani
+# Affiliation: University of Wyoming
+# ORCID: 0000-0001-6059-1920
+# Date: 2023-07-24T19:51:32+00:00
+# Github: haniyeka
+
 name: MURaM_Build
 
 on:
-  schedule:
-    - cron: '0 0 * * MON' 
+  #schedule:
+  #  - cron: '0 0 * * MON' 
   push:
     branches:
       - main
